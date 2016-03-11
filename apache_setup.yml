@@ -1,0 +1,21 @@
+# sample file 
+
+#  this file look like this
+
+---
+- hosts: webserver
+  vars:
+    http_port: 80
+    max_client: 300
+  remote_user: root
+  tasks:
+  - name: installing  httpd and check
+    yum:
+      name: httpd
+      state: latest
+  - name: start the apache service
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+

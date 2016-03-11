@@ -1,0 +1,7 @@
+<< X
+
+
+every    file  with   .sh  extension  will require to run except this everything is docs purpose
+
+
+X

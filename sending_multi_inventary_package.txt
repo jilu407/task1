@@ -1,0 +1,11 @@
+#   In case you have many entries in inventory file then want to send icmp packets
+
+
+cat    /etc/ansible/hosts
+[testing]
+192.168.100.9
+192.168.100.10
+
+[apache]
+192.168.100.11
+

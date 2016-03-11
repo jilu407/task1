@@ -1,0 +1,113 @@
+Step 1:   First install Pip installer you don't have in your redhat 6.4/7.1
+
+[root@desktop83 ~]# yum  install python-pip
+
+then Install ansible :
+
+[root@desktop83 ~]# pip  install  ansible
+
+After Installation  process this operation  you can check there will be  /etc/ansible directory
+
+OR :
+
+You can use Yum installer if you have repopath setup already.
+
+
+ For Redhat 6.4 and later
+==================
+
+[root@desktop57 ~]# rpm -ivh  http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+[root@desktop57 ~]#  yum   install  ansible
+
+ For Redhat 7.1 and Later
+
+[root@desktop57 ~]# rpm -iUvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+
+[root@desktop57 ~]#  cd /etc/yum.repos.d
+
+[root@desktop57 yum.repos.d]# cat  live.repo 
+[aa]
+baseurl=http://mirror.centos.org/centos-7/7.2.1511/os/x86_64/
+gpgcheck=0
+
+[bb]
+baseurl=http://mirror.centos.org/centos-7/7.2.1511/extras/x86_64/
+gpgcheck=0
+
+
+
+
+[root@desktop57 ~]#  yum   install  ansible
+root@ashulinux:/etc/ansible# cd  /etc/ansible/
+root@ashulinux:/etc/ansible# ls
+hosts
+
+Step 2:  Managing  Servers
+
+Ansible was designed to managed multiple servers from a single system by using SSH
+
+Important :
+
+Here We have  three  machine  one is Ansible  installed  and other two are the targets where we want to perform operation
+
+Ansible Installed machine is :   192.168.100.104
+
+
+Target1 --   192.168.100.9
+target2 --   192.168.100.10 
+
+
+Note:   Setup and  and share ssh-keys  from  Ansible machine to target
+
+i)  Generating  ssh-keys
+
+ [root@hmaster ~]# ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+fe:4c:85:36:03:b8:3a:35:35:ec:70:f0:28:bb:ee:a1 root@hmaster.example.com
+The key's randomart image is:
++--[ RSA 2048]----+
+|      .          |
+|       *         |
+|    . + B        |
+|     o * o .     |
+|    . + S = .    |
+|     + o . +     |
+|    =   . .      |
+|   o o   +       |
+|  E.o     o      |
++-----------------+
+
+ii)  share keys to both the targets machine 
+
+[root@hmaster ~]# ssh-copy-id   192.168.100.9
+[root@hmaster ~]# ssh-copy-id   192.168.100.10
+
+
+
+Now go to Ansible machine and configure the hosts file
+
+iii)   make a backup of host file
+
+root@ashulinux:~# cp  /etc/ansible/hosts    /etc/ansible/hosts.backup
+
+iv)  Now edit this file and specify the targets IPS
+
+Important:   File  /etc/ansible/hosts    also known as inventory file
+
+
+root@ashulinux:~# vim  /etc/ansible/hosts
+
+This will look like this
+
+root@ashulinux:~# cat  /etc/ansible/hosts
+[testing]
+192.168.100.9
+192.168.100.10
+
